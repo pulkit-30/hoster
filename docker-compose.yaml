@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo:/data/db/
+    container_name: mongodb
+  hosterApi:
+    container_name: hoster
+    image: hoster
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: base
+    environment:
+      - DB_URL=mongodb://mongodb:27017/hoster-local
+    ports:
+      - "80:80"
+    volumes:
+      - /app/node_modules
+      - .:/app/
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo:

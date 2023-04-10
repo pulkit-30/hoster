@@ -15,6 +15,9 @@ app.set("view engine", "ejs");
 app.use("public", express.static(path.join(__dirname, "public")));
 
 // app endpoints
+app.get("/", (req, res) => {
+  return res.send("welcome to hoster api.");
+});
 app.use("/v1/api/", index);
 app.use("/v1/api/auth", auth);
 app.use("/v1/api/user", user);
